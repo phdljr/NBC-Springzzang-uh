@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나만의 추억 엘범</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        /* 폰트 설정 */
+        @import url('https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap');
+
+        * {
+            font-family: 'Sunflower', sans-serif;
+        }
+
+        .mytitle {
+            height: 250px;
+            color: white;
+            display: flex;
+            /* 안의 아이템을 열 형태로 나열 */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://images.unsplash.com/photo-1511992243105-2992b3fd0410?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-position: center;
+            background-size: cover;
+        }
+
+        .mytitle>button {
+            width: 150px;
+            height: 50px;
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .mycards {
+            width: 1200px;
+            margin: 30px auto 0px auto;
+        }
+
+        .mypostingbox {
+            /* background-color: green; */
+            width: 500px;
+            margin: 30px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px blue;
+            border-radius: 5px;
+        }
+
+        .mybtn {
+            display: flex;
+            /* 안의 아이템을 열 형태로 나열 */
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mybtn>button {
+            margin-right: 5px;
+        }
+    </style>
+    <!-- type이 module이면 다 로딩되고 호출됨 -->
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { db } from "./js/db.js";
+        // import { firestore } from './firebase';
+
+
+        // 1. [팀]과 [자신]
+        // ----------------------
+        //  에 대한 설명 및 MBTI 
+        // 2. 객관적으로 살펴본 자신의 장점
+        // 3. 자신의 스타일 협업 스타일 소개
+        // 4. 우리 팀만의 특징과 추구하는 궁극적인 목표
+        // 5. 우리 팀의 약속
+        // 6. 팀원들의 블로그 주소
+
+        // team, name, info, mbti
+
+        $("#postingbtn").click(async function () {
+            let id = "ljr";
+            let image = $('#image').val();
+            let title = $('#title').val();
+            let content = $('#content').val();
+            let date = $('#date').val();
+
+            let data = {
+                'image': image,
+                'title': title,
+                'content': content,
+                'date': date
+            };
+
+            await setDoc(doc(db, "members", id), data);
+            alert('저장 완료!');
+            window.location.reload();
+        })
+
+        $("#savebtn").click(async function () {
+            $('#postingbox').toggle();
+        })
+
+        let docs = await getDocs(collection(db, "albums"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+
+            let image = row['image'];
+            let title = row['title'];
+            let content = row['content'];
+            let date = row['date'];
+
+            let html = `
+            <div class="col">
+                <div class="card h-100">
+                    <img src="${image}"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${content}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">${date}</small>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            $('#card').append(html);
+        });
+
+        ////////////////////
+
+
+
+
+        const docRef = doc(db, "albums", "IaVwMfMojJRJxVdl9yiI"); // 도큐먼트 데이터 가져오기
+
+        // Create: setDoc()
+        // Update: setDoc()
+        // Delete: deleteDoc()
+
+        $("#deleteBtn").click(function () {
+            setDoc(doc(db, "albums", "test123"), {
+                name: "이종렬",
+                asdas: "zxjcxz"
+            });
+        })
+    </script>
+</head>
+
+<body>
+    <button id="deleteBtn">삭제</button>
+    <div class="mytitle">
+        <h1>나만의 추억 앨범</h1>
+        <button id="savebtn">추억 저장하기</button>
+    </div>
+    <div id="postingbox" class="mypostingbox">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="image" placeholder="앨범 이미지">
+            <label for="floatingInput">앨범 이미지</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="title" placeholder="앨범 제목">
+            <label for="floatingInput">앨범 제목</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="content" placeholder="앨범 내용">
+            <label for="floatingInput">앨범 내용</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="date" placeholder="앨범 날짜">
+            <label for="floatingInput">앨범 날짜</label>
+        </div>
+        <div class="mybtn">
+            <button id="postingbtn" type="button" class="btn btn-primary">기록하기</button>
+            <button type="button" class="btn btn-outline-primary">닫기</button>
+        </div>
+    </div>
+    <div class="mycards">
+        <div id="card" class="row row-cols-1 row-cols-md-4 g-4">
+            <!-- <div class="col">
+                <div class="card h-100">
+                    <img src="https://images.unsplash.com/photo-1446768500601-ac47e5ec3719?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1446&q=80"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">앨범 제목</h5>
+                        <p class="card-text">앨범 내용</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">앨범 날짜</small>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</body>
+
+</html>
