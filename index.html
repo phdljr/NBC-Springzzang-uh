@@ -7,11 +7,11 @@
     <title>프로젝트 팀원 소개</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-    crossorigin="anonymous"></script>
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
 
-    
-  
+
+
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -19,7 +19,7 @@
 
 
     <style>
-        .btn-btn-primary{
+        .btn-btn-primary {
             background-color: rgba(71, 129, 255, 0.445);
             width: 100px;
             height: 50px;
@@ -30,13 +30,15 @@
             justify-content: center;
         }
 
-        .modal-title{
+        .modal-title {
             color: #000000;
 
         }
-        .col-form-label{
+
+        .col-form-label {
             color: #000000;
         }
+
         .button {
             background-color: rgba(71, 129, 255, 0.445);
             width: 100px;
@@ -99,33 +101,48 @@
         import { getDocs, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { db, storage } from "./js/db.js";
         import { ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
-        $("#btn").click(async function () {
 
-            let id = $('#ans0').val();
-            console.log(id);
-            let image = $('#ans1').val();
-            let title = $('#ans2').val();
-            let content = $('#ans3').val();
-            let date = $('#ans4').val();
+        $("#btn").click(async function () {
+            let position = $('#position').val();
+            let name = $('#name').val();
+            let imageUrl = $('#imageUrl').val();
+            let info_mbti = $('#info_mbti').val();
+            let advantage = $('#advantage').val();
+            let codingStyle = $('#codingStyle').val();
+            let teamFeature_Goal = $('#teamFeature_Goal').val();
+            let teamPromise = $('#teamPromise').val();
+            let blogUrl = $('#blogUrl').val();
+            let file = document.querySelector('#imageUrl').files[0];
 
             let data = {
-                'image': image,
-                'title': title,
-                'content': content,
-                'date': date
+                position: position,
+                name: name,
+                imageUrl: file.name,
+                info_mbti: info_mbti,
+                advantage: advantage,
+                codingStyle: codingStyle,
+                teamFeature_Goal: teamFeature_Goal,
+                teamPromise: teamPromise,
+                blogUrl: blogUrl
             };
 
-            await setDoc(doc(db, "members", id), data);
-            alert('저장 완료!');
-            window.location.reload();
+            await addDoc(collection(db, "members"), data);
+
+            const storageRef = ref(storage, file.name);
+
+            uploadBytes(storageRef, file).then((snapshot) => {
+                alert('저장 완료!');
+                window.location.reload();
+            });
         });
 
         let docs = await getDocs(collection(db, "members"));
 
         docs.forEach((doc) => {
             let row = doc.data();
+            console.log(row);
 
-            let id = row["id"];
+            let id = doc.id;
             let imageUrl = row["imageUrl"];
             let position = row["position"];
             let name = row["name"];
@@ -144,7 +161,6 @@
 
                     $('#wrapper').append(html);
                 })
-
         });
     </script>
 
@@ -152,62 +168,67 @@
 
 <body>
 
-    <button type="button" id = "button" class="btn-btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">추가
+    <button type="button" id="button" class="btn-btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        data-bs-whatever="@mdo">추가
     </button>
-  
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title" id="exampleModalLabel">팀원 신청서</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-                <div class="mb-3">
-                    <label for="recipient-name" class="col-form-label">이름:</label>
-                    <input type="text" class="form-control" id="ans0">
-                  </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">[팀]과 [자신]에 대한 설명 및 MBTI:</label>
-                <input type="text" class="form-control" id="ans1">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">객관적으로 살펴본 자신의 장점:</label>
-                <textarea class="form-control" id="ans2"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">객관적으로 살펴본 자신의 장점:</label>
-                <textarea class="form-control" id="ans3"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">자신의 스타일 협업 스타일 소개:</label>
-                <textarea class="form-control" id="ans4"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">우리 팀만의 특징과 추구하는 궁극적인 목표:</label>
-                <textarea class="form-control" id="ans5"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">우리 팀의 약속:</label>
-                <textarea class="form-control" id="ans6"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">팀원들의 블로그 주소:</label>
-                <textarea class="form-control" id="ans7"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button id="btn" type="button" class="btn btn-primary">저장</button>
-          </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">팀원 신청서</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">이름</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">역할</label>
+                            <input type="text" class="form-control" id="position">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">사진 파일</label>
+                            <input type="file" class="form-control" id="imageUrl">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">[팀]과 [자신]에 대한 설명 및 MBTI</label>
+                            <input type="text" class="form-control" id="info_mbti">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">객관적으로 살펴본 자신의 장점</label>
+                            <textarea class="form-control" id="advantage"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">자신의 스타일 협업 스타일 소개</label>
+                            <textarea class="form-control" id="codingStyle"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">우리 팀만의 특징과 추구하는 궁극적인 목표</label>
+                            <textarea class="form-control" id="teamFeature_Goal"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">우리 팀의 약속</label>
+                            <textarea class="form-control" id="teamPromise"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">팀원들의 블로그 주소</label>
+                            <input type="text" class="form-control" id="blogUrl">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button id="btn" type="button" class="btn btn-primary">저장</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  
-  
-  <!-- Modal -->
+
+
+    <!-- Modal -->
     <div class="container">
         <h1>봄장어 팀의 잇츠미 프로젝트</h1>
     </div>
