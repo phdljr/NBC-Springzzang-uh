@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
+
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .team-member-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .team-member {
+            border: 2px solid #00FF00;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 400px;
+            width: 100%;
+            height: 680px;
+            background-color: #333;
+        }
+
+        .team-member img {
+            max-width: 100%;
+            height: 350px;
+            border-radius: 50%;
+        }
+
+        .team-member h3 {
+            margin-top: 10px;
+        }
+
+        .qa-container {
+            flex: 1;
+            text-align: left;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 10px;
+        }
+
+        .qa-container h1 {
+            text-align: left;
+        }
+
+        .qa-container h2 {
+            text-align: center;
+        }
+
+        .qa-container p {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        /* 스타일 추가: 토글 버튼 */
+        .toggle-button {
+            cursor: pointer;
+            display: inline-block;
+            margin-left: 5px;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            transition: transform 0.3s;
+            color: #fff;
+            font-size: 20px;
+            /* 변환 애니메이션 효과를 추가 */
+        }
+
+        /* 삼각형 아이콘을 위 아래로 회전하는 스타일 */
+        .rotate-up {
+            transform: rotate(180deg);
+        }
+
+        .qa-container p strong {
+            color: red;
+            font-weight: bold;
+        }
+
+        .back-button button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00FF00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background-color: #00CC00;
+        }
+    </style>
+
+    <script type="module">
+        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDoc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { db, storage } from "./js/db.js";
+        import { ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+
+        const urlId = new URL(location.href).searchParams.get("id");
+
+        const docRef = await getDoc(doc(db, "members", urlId));
+        const row = docRef.data();
+
+        const advantage = row["advantage"];
+        const blogUrl = row["blogUrl"];
+        const codingStyle = row["codingStyle"];
+        const id = row["id"];
+        const imageUrl = row["imageUrl"];
+        const info = row["info"];
+        const mbti = row["mbti"];
+        const name = row["name"];
+        const position = row["position"];
+        const teamFeature = row["teamFeature"];
+        const teamGoal = row["teamGoal"];
+        const teamPromise = row["teamPromise"];
+
+        getDownloadURL(ref(storage, imageUrl))
+            .then((url) => {
+                $("#image").attr("src", url);
+                $("#name").text(name);
+                $("#position").text(position);
+                $("#ans1").text(info + '\n' + mbti);
+                $("#ans2").text(advantage);
+                $("#ans3").text(codingStyle);
+                $("#ans4").text(teamFeature + '\n' + teamGoal);
+                $("#ans5").text(teamPromise);
+                $("#ans6").text(blogUrl);
+            })
+    </script>
+</head>
+
+<body>
+    <h1>프로젝트 팀장</h1>
+    <div class="team-member-container">
+        <div class="team-member">
+            <img id="image" src="" alt="">
+            <h1 id="name"></h1>
+            <h2 id="position"></h2>
+        </div>
+        <div class="qa-container">
+            <h1>It's me</h1>
+            <div class="qa-item">
+                <p><strong>Q1:</strong> [팀]과 [자신]에 대한 설명 및 MBTI <button class="toggle-button"
+                        onclick="toggleAnswer('A1', this)">▼</button></p>
+                <p id="A1" style="display: none;"><strong>A1:</strong> <span id="ans1"></span>
+                </p>
+            </div>
+            <div class="qa-item">
+                <p><strong>Q2:</strong> 객관적으로 살펴본 자신의 장점 <button class="toggle-button"
+                        onclick="toggleAnswer('A2', this)">▼</button></p>
+                <p id="A2" style="display: none;"><strong>A2:</strong> <span id="ans2">저는 컴퓨터 앞에 오래 앉아 있을 수 있습니다. 개발쪽에선
+                        장점인 것 같아요.</span>
+                </p>
+            </div>
+            <div class="qa-item">
+                <p><strong>Q3:</strong> 자신의 스타일 협업 스타일 소개 <button class="toggle-button"
+                        onclick="toggleAnswer('A3', this)">▼</button></p>
+                <p id="A3" style="display: none;"><strong>A3:</strong> <span id="ans3">저의 협업 스타일은 장단점이 있어요. 말을 최대한 이쁘게
+                        하려고 노력하는게 장점입니다.
+                        단점은 제가 요구하는 점을 확실하게 어필하지 못해요. 이번 캠프를 통해서 고치려고 합니다.</span>
+                </p>
+            </div>
+            <div class="qa-item">
+                <p><strong>Q4:</strong> 우리 팀만의 특징과 추구하는 궁극적인 목표 <button class="toggle-button"
+                        onclick="toggleAnswer('A4', this)">▼</button></p>
+                <p id="A4" style="display: none;"><strong>A4:</strong> <span id="ans4">기술적인 면을 잘 보여주는 것도 중요하지만 미니프로젝트의
+                        목적에 따라 팀단위로 소통하고
+                        계획을 세우고 각자 역할을 분배하고 같이 회고해 보는것이 우리팀의 궁극적인 목표입니다.</span>
+                </p>
+            </div>
+            <div class="qa-item">
+                <p><strong>Q5:</strong> 우리 팀의 약속 <button class="toggle-button"
+                        onclick="toggleAnswer('A5', this)">▼</button></p>
+                <p id="A5" style="display: none;"><strong>A5:</strong> <span id="ans5">서로 말을 잘해주기입니다. 서로서로 입퇴실 체크해주고
+                        특이사항 생기면 바로 얘기해주기
+                        등등
+                        소통을 잘 하자로 약속을 정했습니다.</span>
+                </p>
+            </div>
+            <div class="qa-item">
+                <p><strong>Q6:</strong> 팀원들의 블로그 주소 <button class="toggle-button"
+                        onclick="toggleAnswer('A6', this)">▼</button></p>
+                <p id="A6" style="display: none;"><strong>A6:</strong><a href="https://velog.io/@qoxowkd0716"
+                        target="_blank"> <span id="ans6">https://velog.io/@qoxowkd0716</span></a>
+                </p>
+            </div>
+            <button id="backButton" class="back-button" onclick="goBack()">
+                뒤로가기
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id, button) {
+            var qaItem = button.closest(".qa-item"); // 해당 질문과 답변을 감싸는 div 요소 선택
+            var answer = qaItem.querySelector("p[id='" + id + "']");
+
+            if (answer.style.display === "none" || answer.style.display === "") {
+                answer.style.display = "block";
+                button.classList.toggle("rotate-up"); // 버튼 모양을 위로 회전하는 스타일 클래스를 추가/제거
+            } else {
+                answer.style.display = "none";
+                button.classList.toggle("rotate-up"); // 버튼 모양 클래스를 추가/제거
+            }
+        }
+
+        // 뒤로가기 버튼을 클릭하면 이전 페이지로 이동
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>
