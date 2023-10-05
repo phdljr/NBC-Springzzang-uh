@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
+
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .team-member-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .team-member {
+            border: 2px solid #00FF00;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 400px;
+            width: 100%;
+            height: 680px;
+            background-color: #333;
+        }
+
+        .team-member img {
+            max-width: 100%;
+            height: 350px;
+            border-radius: 50%;
+        }
+
+        .team-member h3 {
+            margin-top: 10px;
+        }
+
+        .qa-container {
+            flex: 1;
+            text-align: left;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 10px;
+        }
+
+        .qa-container h1 {
+            text-align: center;
+        }
+
+        .qa-container h2 {
+            text-align: center;
+        }
+
+        .qa-container p {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        /* 스타일 추가: 토글 버튼 */
+        .toggle-button {
+            cursor: pointer;
+            display: inline-block;
+            margin-left: 5px;
+            border: none;
+            background-color: transparent;
+            outline: none;
+            transition: transform 0.3s;
+            color: #fff;
+            /* 변환 애니메이션 효과를 추가 */
+        }
+
+        /* 삼각형 아이콘을 위 아래로 회전하는 스타일 */
+        .rotate-up {
+            transform: rotate(180deg);
+        }
+
+        .qa-container p strong {
+            color: red;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <h1>프로젝트 팀장</h1>
+    <div class="team-member-container">
+        <div class="team-member">
+            <img src="https://ifh.cc/g/KrmSOz.jpg" alt="팀장">
+            <h1>배규태</h1>
+            <h2>팀장</h2>
+        </div>
+        <div class="qa-container">
+            <h1>It's me</h1>
+            <div>
+                <p><strong>Q1:</strong> [팀]과 [자신]에 대한 설명 및 MBTI <button class="toggle-button"
+                        onclick="toggleAnswer('A1', this)">▼</button></p>
+                <p id="A1" style="display: none;"><strong>A1:</strong> 저희 팀은 사전캠프부터 쭉 같이 달려온 팀입니다! 그래서 소통이 매우 잘되고 있어요!
+                    저의 MBTI는 INTP입니다. 매우 소극적인 사람이지만 소통이 중요한 개발자 세계에서 소극적인면을 극복하고자 팀장이 되었습니다!
+                </p>
+            </div>
+            <div>
+                <p><strong>Q2:</strong> 객관적으로 살펴본 자신의 장점 <button class="toggle-button"
+                        onclick="toggleAnswer('A2', this)">▼</button></p>
+                <p id="A2" style="display: none;"><strong>A2:</strong> 저는 컴퓨터 앞에 오래 앉아 있을 수 있습니다. 개발쪽에선 장점인 것 같아요.
+                </p>
+            </div>
+            <div>
+                <p><strong>Q3:</strong> 자신의 스타일 협업 스타일 소개 <button class="toggle-button"
+                        onclick="toggleAnswer('A3', this)">▼</button></p>
+                <p id="A3" style="display: none;"><strong>A3:</strong> 저의 협업 스타일은 장단점이 있어요. 말을 최대한 이쁘게 하려고 노력하는게 장점입니다.
+                    단점은 제가 요구하는 점을 확실하게 어필하지 못해요. 이번 캠프를 통해서 고치려고 합니다.
+                </p>
+            </div>
+            <div>
+                <p><strong>Q4:</strong> 우리 팀만의 특징과 추구하는 궁극적인 목표 <button class="toggle-button"
+                        onclick="toggleAnswer('A4', this)">▼</button></p>
+                <p id="A4" style="display: none;"><strong>A4:</strong> 기술적인 면을 잘 보여주는 것도 중요하지만 미니프로젝트의 목적에 따라 팀단위로 소통하고
+                    계획을 세우고 각자 역할을 분배하고 같이 회고해 보는것이 우리팀의 궁극적인 목표입니다.
+                </p>
+            </div>
+            <div>
+                <p><strong>Q5:</strong> 우리 팀의 약속 <button class="toggle-button"
+                        onclick="toggleAnswer('A5', this)">▼</button></p>
+                <p id="A5" style="display: none;"><strong>A5:</strong> 서로 말을 잘해주기입니다. 서로서로 입퇴실 체크해주고 특이사항 생기면 바로 얘기해주기
+                    등등
+                    소통을 잘 하자로 약속을 정했습니다.
+                </p>
+            </div>
+            <div>
+                <p><strong>Q6:</strong> 팀원들의 블로그 주소 <button class="toggle-button"
+                        onclick="toggleAnswer('A6', this)">▼</button></p>
+                <p id="A6" style="display: none;"><strong>A6:</strong><a href="https://velog.io/@qoxowkd0716"
+                        target="_blank"> https://velog.io/@qoxowkd0716</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(id, button) {
+            var answer = document.getElementById(id);
+            if (answer.style.display === "none" || answer.style.display === "") {
+                answer.style.display = "block";
+                button.classList.toggle("rotate-up"); // 버튼 모양을 위로 회전하는 스타일 클래스를 추가/제거
+            } else {
+                answer.style.display = "none";
+                button.classList.toggle("rotate-up"); // 버튼 모양 클래스를 추가/제거
+            }
+        }
+    </script>
+</body>
+
+</html>
