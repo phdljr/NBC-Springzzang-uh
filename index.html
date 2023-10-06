@@ -6,15 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프로젝트 팀원 소개</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
 
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
         .btn-btn-primary {
@@ -104,7 +102,7 @@
         import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { db, storage } from "./js/db.js";
-        import { ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+        import { ref, getDownloadURL, uploadBytes, deleteObject } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
 
         $("#btn").click(async function () {
             let position = $('#position').val();
@@ -142,11 +140,11 @@
 
         let docs = await getDocs(collection(db, "members"));
 
-        docs.forEach((doc) => {
-            let row = doc.data();
+        docs.forEach((document) => {
+            let row = document.data();
             console.log(row);
 
-            let id = doc.id;
+            let id = document.id;
             let imageUrl = row["imageUrl"];
             let position = row["position"];
             let name = row["name"];
@@ -155,17 +153,14 @@
                 .then((url) => {
                     let html = `
                         <div class="team-member">
-                            <div class="dropdown">
+                            <div class="dropdown" style="float: right">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                                       </svg>
                                 </a>
-                              
                                 <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#" id=${id} >테스트</a></li>
-                                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                  <li><a class="dropdown-item" href="#" id=${id} >삭제</a></li>
                                 </ul>
                               </div>
                             <a href="intro.html?id=${id}">
@@ -178,9 +173,18 @@
 
                     $('#wrapper').append(html);
 
-                    $(`#${id}`).click(async function (){
-                        const docdelete=doc(db,"members",id);
-                        console.log(docdelete);
+                    $(`#${id}`).click(async function () {
+                        if (confirm("삭제하시겠습니까?")) {
+                            // 데이터 삭제
+                            await deleteDoc(doc(db, "members", id));
+                            // 사진 삭제
+                            deleteObject(ref(storage, imageUrl)).then(() => {
+                                alert("삭제 완료");
+                                window.location.reload();
+                            }).catch((error) => {
+                                alert("삭제에 실패했습니다.");
+                            });
+                        }
                     });
                 });
         });
