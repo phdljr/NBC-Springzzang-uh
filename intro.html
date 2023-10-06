@@ -90,17 +90,34 @@
             font-weight: bold;
         }
 
-        .back-button button {
-            position: absolute;
+        .back-button {
+            position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #00FF00;
+            background-color: white;
             color: black;
             border: none;
             border-radius: 5px;
             padding: 10px 20px;
             cursor: pointer;
             font-size: 16px;
+        }
+
+        .edit-button {
+            position: fixed;
+            bottom: 20px;
+            right: 120px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .edit-button:hover {
+            background-color: #00CC00;
         }
 
         .back-button:hover {
@@ -148,7 +165,7 @@
 </head>
 
 <body>
-    <h1>프로젝트 팀장</h1>
+    <h1>봄장어 프로젝트</h1>
     <div class="team-member-container">
         <div class="team-member">
             <img id="image" src="" alt="">
@@ -205,12 +222,16 @@
             <button id="backButton" class="back-button" onclick="goBack()">
                 뒤로가기
             </button>
+
+            <button id="editButton" class="edit-button" onclick="editProfile()">
+                수정하기
+            </button>
         </div>
     </div>
 
     <script>
         function toggleAnswer(id, button) {
-            var qaItem = button.closest(".qa-item"); // 해당 질문과 답변을 감싸는 div 요소 선택
+            var qaItem = button.closest(".qa-item");
             var answer = qaItem.querySelector("p[id='" + id + "']");
 
             if (answer.style.display === "none" || answer.style.display === "") {
@@ -224,7 +245,14 @@
 
         // 뒤로가기 버튼을 클릭하면 이전 페이지로 이동
         function goBack() {
-            window.history.back();
+            window.location.href="index.html";
+        }
+
+        // 수정하기 버튼을 클릭하면 프로필 수정 페이지로 이동
+        function editProfile() {
+            // 수정 페이지 URL 설정
+            var editPageUrl = '수정페이지 URL 입력';
+            window.location.href = editPageUrl;
         }
     </script>
 </body>
