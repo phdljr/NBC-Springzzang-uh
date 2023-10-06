@@ -58,20 +58,6 @@
             border-radius: 5px;
         }
 
-        .edit-container input[type="url"]
-
-        /* 이미지 URL 입력란 */
-            {
-            width: 95%;
-            height: 40px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #fff;
-            background-color: #333;
-            color: #fff;
-            border-radius: 5px;
-        }
-
         .edit-container button {
             background-color: white;
             color: #000;
@@ -160,9 +146,9 @@
         <label for="name">이름:</label>
         <input type="text" id="name" name="name">
 
-        <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">사진 파일</label>
-            <input type="file" class="form-control" id="imageUrl">
+        <div class="mb-3" style="width: 95%;">
+            <label for="imageUrl" class="form-label" style="color: white;">사진 파일</label>
+            <input type="file" class="form-control" id="imageUrl" style="background-color: #333; color: white; height: 37px;">
         </div>
 
         <label for="position">팀역할:</label>
