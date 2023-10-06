@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
 
@@ -41,8 +42,7 @@
             margin-bottom: 10px;
         }
 
-        .edit-container input[type="text"]
-        {
+        .edit-container input[type="text"] {
             width: 95%;
             height: 40px;
             padding: 10px;
@@ -53,8 +53,10 @@
             border-radius: 5px;
         }
 
-        .edit-container input[type="url"] /* 이미지 URL 입력란 */
-        {
+        .edit-container input[type="url"]
+
+        /* 이미지 URL 입력란 */
+            {
             width: 95%;
             height: 40px;
             padding: 10px;
@@ -80,6 +82,43 @@
             background-color: red;
         }
     </style>
+
+    <script type="module">
+        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDoc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { db, storage } from "./js/db.js";
+        import { ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+
+        const memberId = new URL(location.href).searchParams.get("id");
+
+        const docRef = await getDoc(doc(db, "members", memberId));
+        const row = docRef.data();
+
+        const position = row["position"];
+        const name = row["name"];
+        const info_mbti = row["info_mbti"];
+        const advantage = row["advantage"];
+        const codingStyle = row["codingStyle"];
+        const teamFeature_Goal = row["teamFeature_Goal"];
+        const teamPromise = row["teamPromise"];
+        const blogUrl = row["blogUrl"];
+
+        getDownloadURL(ref(storage, imageUrl))
+            .then((url) => {
+                $("#name").val(name);
+                $("#position").val(position);
+                $("#info_mbti").val(info_mbti);
+                $("#advantage").val(advantage);
+                $("#codingStyle").val(codingStyle);
+                $("#teamFeature_Goal").val(teamFeature_Goal);
+                $("#teamPromise").val(teamPromise);
+                $("#blogUrl").val(blogUrl);
+            })
+
+        $("#cancelButton").click(() => {
+            window.location.href = "index.html";
+        })
+    </script>
 </head>
 
 <body>
@@ -89,35 +128,32 @@
         <input type="text" id="name" name="name">
 
         <label for="imageUrl">이미지 URL:</label>
-        <input type="url" id="imageUrl" name="imageUrl">
-        
+        <input type="file" id="imageUrl" name="imageUrl">
+
         <label for="position">팀역할:</label>
         <input type="text" id="position" name="position">
-        
+
         <label for="info_mbti">자기 소개 및 MBTI:</label>
         <input type="text" id="info_mbti" name="info_mbti">
-        
+
         <label for="advantage">장점:</label>
         <input type="text" id="advantage" name="advantage">
-        
+
         <label for="codingStyle">협업 스타일:</label>
         <input type="text" id="codingStyle" name="codingStyle">
-        
+
         <label for="teamFeature_Goal">팀 특징 및 팀 목표:</label>
         <input type="text" id="teamFeature_Goal" name="teamFeature_Goal">
-        
+
         <label for="teamPromise">팀 약속:</label>
         <input type="text" id="teamPromise" name="teamPromise">
-        
+
         <label for="blogUrl">블로그 주소:</label>
         <input type="text" id="blogUrl" name="blogUrl">
-        
-        <button id="saveButton" onclick="saveProfile()">저장하기</button>
-    </div>
 
-    <script>
-        
-    </script>
+        <button id="saveButton">저장하기</button>
+        <button id="cancelButton">취소</button>
+    </div>
 </body>
 
 </html>
