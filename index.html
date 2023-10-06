@@ -92,12 +92,6 @@
         }
     </style>
 
-    <script>
-        function test(id) {
-            console.log(id);
-        }
-    </script>
-
     <script type="module">
         import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -105,18 +99,18 @@
         import { ref, getDownloadURL, uploadBytes, deleteObject } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
 
         $("#btn").click(async function () {
-            let position = $('#position').val();
-            let name = $('#name').val();
-            let imageUrl = $('#imageUrl').val();
-            let info_mbti = $('#info_mbti').val();
-            let advantage = $('#advantage').val();
-            let codingStyle = $('#codingStyle').val();
-            let teamFeature_Goal = $('#teamFeature_Goal').val();
-            let teamPromise = $('#teamPromise').val();
-            let blogUrl = $('#blogUrl').val();
-            let file = document.querySelector('#imageUrl').files[0];
+            const position = $('#position').val();
+            const name = $('#name').val();
+            const imageUrl = $('#imageUrl').val();
+            const info_mbti = $('#info_mbti').val();
+            const advantage = $('#advantage').val();
+            const codingStyle = $('#codingStyle').val();
+            const teamFeature_Goal = $('#teamFeature_Goal').val();
+            const teamPromise = $('#teamPromise').val();
+            const blogUrl = $('#blogUrl').val();
+            const file = document.querySelector('#imageUrl').files[0];
 
-            let data = {
+            const data = {
                 position: position,
                 name: name,
                 imageUrl: file.name,
@@ -144,10 +138,10 @@
             let row = document.data();
             console.log(row);
 
-            let id = document.id;
-            let imageUrl = row["imageUrl"];
-            let position = row["position"];
-            let name = row["name"];
+            const id = document.id;
+            const imageUrl = row["imageUrl"];
+            const position = row["position"];
+            const name = row["name"];
 
             getDownloadURL(ref(storage, imageUrl))
                 .then((url) => {

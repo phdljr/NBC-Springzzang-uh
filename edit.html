@@ -103,17 +103,37 @@
         const teamPromise = row["teamPromise"];
         const blogUrl = row["blogUrl"];
 
-        getDownloadURL(ref(storage, imageUrl))
-            .then((url) => {
-                $("#name").val(name);
-                $("#position").val(position);
-                $("#info_mbti").val(info_mbti);
-                $("#advantage").val(advantage);
-                $("#codingStyle").val(codingStyle);
-                $("#teamFeature_Goal").val(teamFeature_Goal);
-                $("#teamPromise").val(teamPromise);
-                $("#blogUrl").val(blogUrl);
-            })
+        $("#name").val(name);
+        $("#position").val(position);
+        $("#info_mbti").val(info_mbti);
+        $("#advantage").val(advantage);
+        $("#codingStyle").val(codingStyle);
+        $("#teamFeature_Goal").val(teamFeature_Goal);
+        $("#teamPromise").val(teamPromise);
+        $("#blogUrl").val(blogUrl);
+
+        $("#saveButton").click(async function () {
+            const file = document.querySelector('#imageUrl').files[0];
+
+            const data = {
+                name: $("#name").val(),
+                imageUrl: file.name,
+                position: $("#position").val(),
+                info_mbti: $("#info_mbti").val(),
+                advantage: $("#advantage").val(),
+                codingStyle: $("#codingStyle").val(),
+                teamFeature_Goal: $("#teamFeature_Goal").val(),
+                teamPromise: $("#teamPromise").val(),
+                blogUrl: $("#blogUrl").val()
+            };
+
+            await updateDoc(doc(db, "members", memberId), data);
+
+            uploadBytes(ref(storage, file.name), file).then((snapshot) => {
+                alert("수정 완료");
+                window.location.href = "index.html";
+            });
+        })
 
         $("#cancelButton").click(() => {
             window.location.href = "index.html";
