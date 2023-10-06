@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
+
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* 수정 페이지의 스타일 */
+        .edit-container {
+            border: 2px solid red;
+            width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .edit-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .edit-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .edit-container input[type="text"]
+        {
+            width: 95%;
+            height: 40px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #fff;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .edit-container input[type="url"] /* 이미지 URL 입력란 */
+        {
+            width: 95%;
+            height: 40px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #fff;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .edit-container button {
+            background-color: white;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .edit-container button:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="edit-container">
+        <h1>프로필 수정</h1>
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name">
+
+        <label for="imageUrl">이미지 URL:</label>
+        <input type="url" id="imageUrl" name="imageUrl">
+        
+        <label for="position">팀역할:</label>
+        <input type="text" id="position" name="position">
+        
+        <label for="info_mbti">자기 소개 및 MBTI:</label>
+        <input type="text" id="info_mbti" name="info_mbti">
+        
+        <label for="advantage">장점:</label>
+        <input type="text" id="advantage" name="advantage">
+        
+        <label for="codingStyle">협업 스타일:</label>
+        <input type="text" id="codingStyle" name="codingStyle">
+        
+        <label for="teamFeature_Goal">팀 특징 및 팀 목표:</label>
+        <input type="text" id="teamFeature_Goal" name="teamFeature_Goal">
+        
+        <label for="teamPromise">팀 약속:</label>
+        <input type="text" id="teamPromise" name="teamPromise">
+        
+        <label for="blogUrl">블로그 주소:</label>
+        <input type="text" id="blogUrl" name="blogUrl">
+        
+        <button id="saveButton" onclick="saveProfile()">저장하기</button>
+    </div>
+
+    <script>
+        
+    </script>
+</body>
+
+</html>
