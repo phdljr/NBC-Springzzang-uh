@@ -12,6 +12,21 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <style>
+        *{margin: 0; padding: 0;}
+        header{min-width: 300px; height: 80px; background-color: rgb(32, 160, 47);
+        font-size: 30px; color: white; position: relative;}
+        header p{position: absolute; top: 50%; left: 50%;
+        transform: translateX(-50%) translateY(-50%);}
+        #dm_ul{position: relative;  margin: auto; background-color: none; text-align: right; }
+          .dropmenu ul ul{position: absolute; display: none;  }
+          .dropmenu ul ul li{display: block; background-color: white; color: white;}
+        .dropmenu ul li{display: inline-block; margin-left: -5.5px;}
+        .dropmenu ul li a{display: block; width: 100px; color: black; line-height: 43px;
+          text-decoration: none; text-align: center;}
+        #test{display: block; width: 100px; color: black; line-height: 43px;
+            text-decoration: none; text-align: right;}
+
+        
         .btn-btn-primary {
             background-color: white;
             color: #000;
@@ -144,24 +159,29 @@
             const imageUrl = row["imageUrl"];
             const position = row["position"];
             const name = row["name"];
+            const dropdown=row["name"];
 
             getDownloadURL(ref(storage, imageUrl))
                 .then((url) => {
                     let html = `
                         <div class="team-member">
-                            <div class="dropdown" style="float: right">
-                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <div  class="dropmenu">
+                                <ul id="dm_ul">
+                                  <li id=${dropdown} >
+                                    <a id="test" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" color="white" overflow:"hidden" width="40" height="40" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                                       </svg>
-                                </a>
-                                <ul class="dropdown-menu">
-                                  <li><a class="dropdown-item" href="#" id=${id} >삭제</a></li>
-                                  <li><a class="dropdown-item" href="edit.html?id=${id}">수정</a></li>
-                                </ul>
+                                  </a>
+                                    <ul >
+                                      <li><a href="#" id=${id} >삭제</a></li>
+                                      <li><a href="edit.html?id=${id}">수정</a></li>
+                                    </ul>
+                                  </li>
+                                  </ul>
                               </div>
                             <a href="intro.html?id=${id}">
-                                <img src=${url} alt=${position}>
+                                <img src=${url} alt=${position} style="width: 230px; height: 300px;">
                             </a>
                             <h3>${name}</h3>
                             <p>${position}</p>
@@ -170,6 +190,11 @@
 
                     $('#wrapper').append(html);
 
+                    
+                    $(`#${dropdown}`).click(function(e){
+                        $(this).find("ul").stop().fadeToggle(300); 
+                    });
+			
                     $(`#${id}`).click(async function () {
                         if (confirm("삭제하시겠습니까?")) {
                             // 데이터 삭제
