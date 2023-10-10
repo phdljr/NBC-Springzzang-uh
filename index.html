@@ -12,21 +12,76 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <style>
-        *{margin: 0; padding: 0;}
-        header{min-width: 300px; height: 80px; background-color: rgb(32, 160, 47);
-        font-size: 30px; color: white; position: relative;}
-        header p{position: absolute; top: 50%; left: 50%;
-        transform: translateX(-50%) translateY(-50%);}
-        #dm_ul{position: relative;  margin: auto; background-color: none; text-align: right; }
-          .dropmenu ul ul{position: absolute; display: none;  }
-          .dropmenu ul ul li{display: block; background-color: white; color: white;}
-        .dropmenu ul li{display: inline-block; margin-left: -5.5px;}
-        .dropmenu ul li a{display: block; width: 100px; color: black; line-height: 43px;
-          text-decoration: none; text-align: center;}
-        #test{display: block; width: 100px; color: black; line-height: 43px;
-            text-decoration: none; text-align: right;}
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Lobster&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
 
-        
+        h1 {
+            font-family: 'Lobster', cursive;
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            min-width: 300px;
+            height: 80px;
+            background-color: rgb(32, 160, 47);
+            font-size: 30px;
+            color: white;
+            position: relative;
+        }
+
+        header p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        #dm_ul {
+            position: relative;
+            margin: auto;
+            background-color: none;
+            text-align: right;
+        }
+
+        .dropmenu ul ul {
+            position: absolute;
+            display: none;
+        }
+
+        .dropmenu ul ul li {
+            display: block;
+            background-color: white;
+            color: white;
+        }
+
+        .dropmenu ul li {
+            display: inline-block;
+            margin-left: -5.5px;
+        }
+
+        .dropmenu ul li a {
+            display: block;
+            width: 100px;
+            color: black;
+            line-height: 43px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        #test {
+            display: block;
+            width: 100px;
+            color: black;
+            line-height: 43px;
+            text-decoration: none;
+            text-align: right;
+        }
+
+
         .btn-btn-primary {
             background-color: white;
             color: #000;
@@ -101,14 +156,18 @@
 
         .team-members {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             justify-content: center;
         }
 
         .container {
-            width: 1200px;
-            margin: 0px auto;
+            height: 250px;
+            color: white;
+        }
+
+        .container > h1 {
+            font-size: 100px;
         }
     </style>
 
@@ -196,7 +255,8 @@
         </div>
     </div>
     <div class="container">
-        <h1>봄장어 팀의 잇츠미 프로젝트</h1>
+        <h1>It's Me</h1>
+        <p1>미니프로젝트</p1>
         <div id="wrapper" class="team-members container">
         </div>
     </div>
