@@ -6,6 +6,7 @@ export const deleteMember = async (id, imageUrl) => {
     if (confirm("삭제하시겠습니까?")) {
         // 데이터 삭제
         await deleteDoc(doc(db, "members", id));
+
         // 사진 삭제
         deleteObject(ref(storage, imageUrl)).then(() => {
             alert("삭제 완료");

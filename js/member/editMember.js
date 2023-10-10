@@ -8,7 +8,7 @@ export const editMember = async (memberId, data, file) => {
 
         await updateDoc(doc(db, "members", memberId), data);
 
-        uploadBytes(ref(storage, file.name), file).then((snapshot) => {
+        uploadBytes(ref(storage, data.imageUrl), file).then((snapshot) => {
             alert("수정 완료!");
             window.location.href = "index.html";
         });

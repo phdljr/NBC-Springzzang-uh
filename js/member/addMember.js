@@ -5,7 +5,7 @@ import { db, storage } from "../db.js";
 export const addMember = async (data, file) => {
   await addDoc(collection(db, "members"), data);
 
-  const storageRef = ref(storage, file.name);
+  const storageRef = ref(storage, data.imageUrl);
 
   uploadBytes(storageRef, file).then((snapshot) => {
     alert("저장 완료!");
