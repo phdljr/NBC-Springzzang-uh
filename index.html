@@ -94,6 +94,8 @@
             grid-template-columns: repeat(4,1fr); /* 4열 그리드 생성 */
             gap: 20px; /* 열 간격 설정 */
         }
+
+
     </style>
 
     <script type="module">
@@ -150,7 +152,7 @@
             getDownloadURL(ref(storage, imageUrl))
                 .then((url) => {
                     let html = `
-                        <div class="team-member">
+                        <div class="team-member col">
                             <div class="dropdown" style="float: right">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
