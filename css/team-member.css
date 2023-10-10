@@ -1,0 +1,16 @@
+.team-member {
+    border-radius: 10px;
+    max-width: 400px;
+    background-color: #333;
+}
+
+.team-member img {
+    max-width: 90%;
+    height: 350px;
+    border-radius: 50%;
+}
+
+.team-member h3 {
+    margin-top: 10px;
+    text-align: center;
+}

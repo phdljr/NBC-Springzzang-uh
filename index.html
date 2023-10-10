@@ -13,7 +13,8 @@
         crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Lobster&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
-
+        @import url(css/team-member.css);
+        @import url(css/dropmenu.css);
         h1 {
             font-family: 'Lobster', cursive;
         }
@@ -45,70 +46,6 @@
                 opacity: 0;
             }
         }
-
-
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            min-width: 300px;
-            height: 80px;
-            background-color: rgb(32, 160, 47);
-            font-size: 30px;
-            color: white;
-            position: relative;
-        }
-
-        header p {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-50%);
-        }
-
-        #dm_ul {
-            position: relative;
-            margin: auto;
-            background-color: none;
-            text-align: right;
-        }
-
-        .dropmenu ul ul {
-            position: absolute;
-            display: none;
-        }
-
-        .dropmenu ul ul li {
-            display: block;
-            background-color: white;
-            color: white;
-        }
-
-        .dropmenu ul li {
-            display: inline-block;
-            margin-left: -5.5px;
-        }
-
-        .dropmenu ul li a {
-            display: block;
-            width: 100px;
-            color: black;
-            line-height: 43px;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        #test {
-            display: block;
-            width: 100px;
-            color: black;
-            line-height: 43px;
-            text-decoration: none;
-            text-align: right;
-        }
-
 
         .btn-btn-primary {
             background-color: white;
@@ -162,26 +99,6 @@
         h1 {
             font-size: 30px;
         }
-
-        .team-member {
-            border: 2px solid #00ff00;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 20px;
-            max-width: 300px;
-            width: 100%;
-            background-color: #333;
-        }
-
-        .team-member img {
-            max-width: 100%;
-            border-radius: 50%;
-        }
-
-        .team-member h3 {
-            margin-top: 10px;
-        }
-
         .team-members {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
