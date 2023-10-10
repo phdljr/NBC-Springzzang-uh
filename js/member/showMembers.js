@@ -1,23 +1,22 @@
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 import { getDownloadURL, ref } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
 import { db, storage } from "../db.js";
 import { deleteMember } from "./deleteMember.js";
 
 export const showMembers = async () => {
-  const docs = await getDocs(collection(db, "members"));
+  const docs = await getDocs(query(collection(db, "members"), orderBy("position")));
   
   docs.forEach((document) => {
     const row = document.data();
 
     const id = document.id;
+    const imageId = document.id + "img";
     const imageUrl = row["imageUrl"];
     const position = row["position"];
     const name = row["name"];
     const dropdown = row["name"];
 
-    getDownloadURL(ref(storage, imageUrl))
-        .then((url) => {
-            const html = `
+    const html = `
                 <div class="team-member">
                     <div  class="dropmenu">
                         <ul id="dm_ul">
@@ -35,20 +34,22 @@ export const showMembers = async () => {
                           </ul>
                       </div>
                     <a href="intro.html?id=${id}">
-                        <img src=${url} alt=${position} style="width: 230px; height: 300px;">
+                        <img id=${imageId} alt=${position} style="width: 230px; height: 300px;">
                     </a>
                     <h3>${name}</h3>
                     <p>${position}</p>
                 </div>
             `;
 
-            $('#wrapper').append(html);
-            
-            $(`#${dropdown}`).click(function(e){
-                $(this).find("ul").stop().fadeToggle(300); 
-            });
+    $('#wrapper').append(html);
+    $(`#${dropdown}`).click(function(e){
+        $(this).find("ul").stop().fadeToggle(300); 
+    });
+    $(`#${id}`).click(() => {deleteMember(id, imageUrl)});
 
-            $(`#${id}`).click(() => {deleteMember(id, imageUrl)});
+    getDownloadURL(ref(storage, imageUrl))
+        .then((url) => {
+            $(`#${imageId}`).attr("src", url);
         });
     });
 }
