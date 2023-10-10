@@ -12,12 +12,76 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Lobster&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
 
-        
-        @import url(css/dropmenu.css);
-        @import url(css/team-member.css);
+        h1 {
+            font-family: 'Lobster', cursive;
+        }
 
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            min-width: 300px;
+            height: 80px;
+            background-color: rgb(32, 160, 47);
+            font-size: 30px;
+            color: white;
+            position: relative;
+        }
+
+        header p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        #dm_ul {
+            position: relative;
+            margin: auto;
+            background-color: none;
+            text-align: right;
+        }
+
+        .dropmenu ul ul {
+            position: absolute;
+            display: none;
+        }
+
+        .dropmenu ul ul li {
+            display: block;
+            background-color: white;
+            color: white;
+        }
+
+        .dropmenu ul li {
+            display: inline-block;
+            margin-left: -5.5px;
+        }
+
+        .dropmenu ul li a {
+            display: block;
+            width: 100px;
+            color: black;
+            line-height: 43px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        #test {
+            display: block;
+            width: 100px;
+            color: black;
+            line-height: 43px;
+            text-decoration: none;
+            text-align: right;
+        }
+
+
         .btn-btn-primary {
             background-color: white;
             color: #000;
@@ -71,6 +135,25 @@
             font-size: 30px;
         }
 
+        .team-member {
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 20px;
+            max-width: 300px;
+            width: 100%;
+            background-color: #333;
+        }
+
+        .team-member img {
+            max-width: 100%;
+            border-radius: 50%;
+        }
+
+        .team-member h3 {
+            margin-top: 10px;
+        }
+
         .team-members {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -79,114 +162,37 @@
         }
 
         .container {
-            width: 1200px;
-            margin: 0px auto;
+            height: 250px;
+            color: white;
+        }
+
+        .container > h1 {
+            font-size: 100px;
         }
     </style>
 
     <script type="module">
-        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { db, storage } from "./js/db.js";
-        import { ref, getDownloadURL, uploadBytes, deleteObject } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+        import { addMember } from "./js/member/addMember.js";
+        import { showMembers } from "./js/member/showMembers.js";
+        
+        showMembers();
 
-        $("#btn").click(async function () {
-            const position = $('#position').val();
-            const name = $('#name').val();
-            const imageUrl = $('#imageUrl').val();
-            const info_mbti = $('#info_mbti').val();
-            const advantage = $('#advantage').val();
-            const codingStyle = $('#codingStyle').val();
-            const teamFeature_Goal = $('#teamFeature_Goal').val();
-            const teamPromise = $('#teamPromise').val();
-            const blogUrl = $('#blogUrl').val();
-            const file = document.querySelector('#imageUrl').files[0];
-
+        $("#btn").click(() => {
             const data = {
-                position: position,
-                name: name,
-                imageUrl: file.name,
-                info_mbti: info_mbti,
-                advantage: advantage,
-                codingStyle: codingStyle,
-                teamFeature_Goal: teamFeature_Goal,
-                teamPromise: teamPromise,
-                blogUrl: blogUrl
+                name: $('#name').val(),
+                position: $('#position').val(),
+                imageUrl: $('#imageUrl').val(),
+                info_mbti: $('#info_mbti').val(),
+                advantage: $('#advantage').val(),
+                codingStyle: $('#codingStyle').val(),
+                teamFeature_Goal: $('#teamFeature_Goal').val(),
+                teamPromise: $('#teamPromise').val(),
+                blogUrl: $('#blogUrl').val(),
             };
+            const file = $('#imageUrl')[0].files[0];
 
-            await addDoc(collection(db, "members"), data);
-
-            const storageRef = ref(storage, file.name);
-
-            uploadBytes(storageRef, file).then((snapshot) => {
-                alert('저장 완료!');
-                window.location.reload();
-            });
+            addMember(data, file);
         });
-
-        let docs = await getDocs(collection(db, "members"));
-
-        docs.forEach((document) => {
-            let row = document.data();
-            console.log(row);
-
-            const id = document.id;
-            const imageUrl = row["imageUrl"];
-            const position = row["position"];
-            const name = row["name"];
-            const dropdown=row["name"];
-
-            getDownloadURL(ref(storage, imageUrl))
-                .then((url) => {
-                    let html = `
-                        <div class="team-member">
-                            <div  class="dropmenu">
-                                <ul id="dm_ul">
-                                  <li id=${dropdown} >
-                                    <a id="test" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="dots" color="white" overflow:"hidden" width="40" height="40" fill="currentColor" class="bi-bi-three-dots" viewBox="0 0 16 16">
-                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                                      </svg>
-                                  </a>
-                                    <ul >
-                                      <li><a href="#" id=${id} >삭제</a></li>
-                                      <li><a href="edit.html?id=${id}">수정</a></li>
-                                    </ul>
-                                  </li>
-                                  </ul>
-                              </div>
-                            <a href="intro.html?id=${id}">
-                                <img src=${url} alt=${position} style="width: 230px; height: 300px;">
-                            </a>
-                            <h3>${name}</h3>
-                            <p>${position}</p>
-                        </div>
-                    `;
-
-                    $('#wrapper').append(html);
-
-                    
-                    $(`#${dropdown}`).click(function(e){
-                        $(this).find("ul").stop().fadeToggle(300); 
-                    });
-			
-                    $(`#${id}`).click(async function () {
-                        if (confirm("삭제하시겠습니까?")) {
-                            // 데이터 삭제
-                            await deleteDoc(doc(db, "members", id));
-                            // 사진 삭제
-                            deleteObject(ref(storage, imageUrl)).then(() => {
-                                alert("삭제 완료");
-                                window.location.reload();
-                            }).catch((error) => {
-                                alert("삭제에 실패했습니다.");
-                            });
-                        }
-                    });
-                });
-        });
-
-        console.log("hello");
     </script>
 </head>
 
@@ -249,7 +255,8 @@
         </div>
     </div>
     <div class="container">
-        <h1>봄장어 팀의 잇츠미 프로젝트</h1>
+        <h1>It's Me</h1>
+        <p1>미니프로젝트</p1>
         <div id="wrapper" class="team-members container">
         </div>
     </div>
