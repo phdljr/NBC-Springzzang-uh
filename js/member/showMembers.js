@@ -15,6 +15,7 @@ export const showMembers = async () => {
     const position = row["position"];
     const name = row["name"];
     const dropdown = row["name"];
+    const cardPassword = row["cardPassword"];
 
     const html = `
                 <div class="team-member">
@@ -45,7 +46,7 @@ export const showMembers = async () => {
     $(`#${dropdown}`).click(function(e){
         $(this).find("ul").stop().fadeToggle(300); 
     });
-    $(`#${id}`).click(() => {deleteMember(id, imageUrl)});
+    $(`#${id}`).click(() => {deleteMember(id, imageUrl, cardPassword)});
 
     getDownloadURL(ref(storage, imageUrl))
         .then((url) => {

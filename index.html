@@ -124,6 +124,7 @@
 
         $("#btn").click(() => {
             const data = {
+                cardPassword: $('#cardPassword').val(),
                 name: $('#name').val(),
                 position: $('#position').val(),
                 imageUrl: $('#imageUrl').val(),
@@ -135,8 +136,8 @@
                 blogUrl: $('#blogUrl').val(),
             };
             const file = $('#imageUrl')[0].files[0];
-
-            addMember(data, file);
+            const commonPassword = $('#commonPassword').val();
+            addMember(data, file, commonPassword);
         });
     </script>
 </head>
@@ -155,8 +156,12 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">비밀번호 입력란</label>
-                            <input type="text" class="form-control" id="password field">
+                            <label for="recipient-name" class="col-form-label">생성 비밀번호</label>
+                            <input type="password" class="form-control" id="commonPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">멤버카드 비밀번호</label>
+                            <input type="password" class="form-control" id="cardPassword">
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">이름</label>

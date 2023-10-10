@@ -94,7 +94,10 @@
         $("#blogUrl").val(row["blogUrl"]);
 
         $("#saveButton").click(() => {
+            const cardPassword = row["cardPassword"];
+            const file = $("#imageUrl")[0].files[0];
             const data = {
+                cardPassword: $("#cardPassword").val(),
                 name: $("#name").val(),
                 position: $("#position").val(),
                 info_mbti: $("#info_mbti").val(),
@@ -104,9 +107,7 @@
                 teamPromise: $("#teamPromise").val(),
                 blogUrl: $("#blogUrl").val()
             };
-
-            const file = $("#imageUrl")[0].files[0];
-            editMember(memberId, data, file)
+            editMember(memberId, data, file, cardPassword)
         }
         );
 
@@ -120,7 +121,7 @@
     <div class="edit-container">
         <h1>프로필 수정</h1>
         <label for="password field">비밀번호 입력란:</label>
-        <input type="text" id="position" name="password field">
+        <input type="password" id="cardPassword" name="password field">
 
         <label for="name">이름:</label>
         <input type="text" id="name" name="name">
