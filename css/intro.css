@@ -1,0 +1,120 @@
+* {
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.team-member-container {
+    display: flex;
+
+    justify-content: space-between;
+    
+}
+
+
+
+
+/* 스타일 추가: 토글 버튼 */
+.toggle-button {
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 5px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    transition: transform 0.3s;
+    color: #fff;
+    font-size: 20px;
+    /* 변환 애니메이션 효과를 추가 */
+}
+
+/* 삼각형 아이콘을 위 아래로 회전하는 스타일 */
+.rotate-up {
+    transform: rotate(180deg);
+}
+
+.qa-container p strong {
+    color: red;
+    font-weight: bold;
+}
+
+.back-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.edit-button {
+    position: fixed;
+    bottom: 20px;
+    right: 120px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: red;
+}
+
+.back-button:hover {
+    background-color: red;
+}
+.team-member {
+    border-radius: 10px;
+    max-width: 400px;
+    background-color: #333;
+}
+
+.team-member img {
+    max-width: fit-content;
+    width: 250px;
+    height: 350px;
+    border-radius: 50%;
+}
+
+.team-member h3 {
+    margin-top: 10px;
+    text-align: center;
+}
+.qa-container {
+    flex: 1;
+    text-align: left;
+    padding: 60px;
+    background-color: #444;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.qa-container h1 {
+    text-align: left;
+}
+
+.qa-container h2 {
+    text-align: center;
+}
+
+.qa-container p {
+    text-align: left;
+    margin-top: 10px;
+}
