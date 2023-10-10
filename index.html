@@ -84,18 +84,14 @@
             margin-top: 10px;
         }
 
+        .team-members {
+            display: flex;
+        }
+
         .container {
             width: 1200px;
             margin: 0px auto;
         }
-        
-        .team-member-container { 
-            display: grid;
-            grid-template-columns: repeat(4,1fr); /* 4열 그리드 생성 */
-            gap: 20px; /* 열 간격 설정 */
-        }
-
-
     </style>
 
     <script type="module">
@@ -152,18 +148,18 @@
             getDownloadURL(ref(storage, imageUrl))
                 .then((url) => {
                     let html = `
-                        <div class="team-member col">
+                        <div class="team-member">
                             <div class="dropdown" style="float: right">
                                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                                    </svg>
+                                      </svg>
                                 </a>
                                 <ul class="dropdown-menu">
                                   <li><a class="dropdown-item" href="#" id=${id} >삭제</a></li>
                                   <li><a class="dropdown-item" href="edit.html?id=${id}">수정</a></li>
                                 </ul>
-                            </div>
+                              </div>
                             <a href="intro.html?id=${id}">
                                 <img src=${url} alt=${position} style="width: 230px; height: 300px;">
                             </a>
