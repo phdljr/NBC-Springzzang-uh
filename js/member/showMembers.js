@@ -27,8 +27,8 @@ export const showMembers = async () => {
                               </svg>
                           </a>
                             <ul >
-                              <li><a href="#" id=${id} >삭제</a></li>
                               <li><a href="edit.html?id=${id}">수정</a></li>
+                              <li><a href="#" id=${id} >삭제</a></li>
                             </ul>
                           </li>
                           </ul>
