@@ -198,105 +198,26 @@
     </style>
 
     <script type="module">
-        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDocs, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { db, storage } from "./js/db.js";
-        import { ref, getDownloadURL, uploadBytes, deleteObject } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+        import { addMember } from "./js/member/addMember.js";
+        import { showMembers } from "./js/member/showMembers.js";
+        
+        showMembers();
 
-        $("#btn").click(async function () {
-            const position = $('#position').val();
-            const name = $('#name').val();
-            const imageUrl = $('#imageUrl').val();
-            const info_mbti = $('#info_mbti').val();
-            const advantage = $('#advantage').val();
-            const codingStyle = $('#codingStyle').val();
-            const teamFeature_Goal = $('#teamFeature_Goal').val();
-            const teamPromise = $('#teamPromise').val();
-            const blogUrl = $('#blogUrl').val();
-            const file = document.querySelector('#imageUrl').files[0];
-
+        $("#btn").click(() => {
             const data = {
-                position: position,
-                name: name,
-                imageUrl: file.name,
-                info_mbti: info_mbti,
-                advantage: advantage,
-                codingStyle: codingStyle,
-                teamFeature_Goal: teamFeature_Goal,
-                teamPromise: teamPromise,
-                blogUrl: blogUrl
+                name: $('#name').val(),
+                position: $('#position').val(),
+                imageUrl: $('#imageUrl').val(),
+                info_mbti: $('#info_mbti').val(),
+                advantage: $('#advantage').val(),
+                codingStyle: $('#codingStyle').val(),
+                teamFeature_Goal: $('#teamFeature_Goal').val(),
+                teamPromise: $('#teamPromise').val(),
+                blogUrl: $('#blogUrl').val(),
             };
+            const file = $('#imageUrl')[0].files[0];
 
-            await addDoc(collection(db, "members"), data);
-
-            const storageRef = ref(storage, file.name);
-
-            uploadBytes(storageRef, file).then((snapshot) => {
-                alert('저장 완료!');
-                window.location.reload();
-            });
-        });
-
-        let docs = await getDocs(collection(db, "members"));
-
-        docs.forEach((document) => {
-            let row = document.data();
-            console.log(row);
-
-            const id = document.id;
-            const imageUrl = row["imageUrl"];
-            const position = row["position"];
-            const name = row["name"];
-            const dropdown = row["name"];
-
-            getDownloadURL(ref(storage, imageUrl))
-                .then((url) => {
-                    let html = `
-                        <div class="team-member">
-                            <div  class="dropmenu">
-                                <ul id="dm_ul">
-                                  <li id=${dropdown} >
-                                    <a id="test" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" color="white" overflow:"hidden" width="40" height="40" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                                      </svg>
-                                  </a>
-                                    <ul >
-                                      <li><a href="#" id=${id} >삭제</a></li>
-                                      <li><a href="edit.html?id=${id}">수정</a></li>
-                                    </ul>
-                                  </li>
-                                  </ul>
-                              </div>
-                            <a href="intro.html?id=${id}">
-                                <img src=${url} alt=${position} style="width: 230px; height: 300px;">
-                            </a>
-                            <h3>${name}</h3>
-                            <p>${position}</p>
-                        </div>
-                    `;
-
-                    $('#wrapper').append(html);
-
-
-                    $(`#${dropdown}`).click(function (e) {
-                        $(this).find("ul").stop().fadeToggle(300);
-                    });
-
-                    $(`#${id}`).click(async function () {
-                        if (confirm("삭제하시겠습니까?")) {
-                            // 데이터 삭제
-                            await deleteDoc(doc(db, "members", id));
-                            // 사진 삭제
-                            deleteObject(ref(storage, imageUrl)).then(() => {
-                                alert("삭제 완료");
-                                window.location.reload();
-                            }).catch((error) => {
-                                alert("삭제에 실패했습니다.");
-                            });
-                        }
-                    });
-                });
+            addMember(data, file);
         });
     </script>
 </head>

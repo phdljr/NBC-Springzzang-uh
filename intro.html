@@ -133,39 +133,10 @@
     </style>
 
     <script type="module">
-        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDoc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { db, storage } from "./js/db.js";
-        import { ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+        import {showMember} from "./js/member/showMember.js";
 
-        const urlId = new URL(location.href).searchParams.get("id");
-
-        const docRef = await getDoc(doc(db, "members", urlId));
-        const row = docRef.data();
-
-        const position = row["position"];
-        const name = row["name"];
-        const imageUrl = row["imageUrl"];
-        const info_mbti = row["info_mbti"];
-        const advantage = row["advantage"];
-        const codingStyle = row["codingStyle"];
-        const teamFeature_Goal = row["teamFeature_Goal"];
-        const teamPromise = row["teamPromise"];
-        const blogUrl = row["blogUrl"];
-
-        getDownloadURL(ref(storage, imageUrl))
-            .then((url) => {
-                $("#image").attr("src", url);
-                $("#name").text(name);
-                $("#position").text(position);
-                $("#ans1").text(info_mbti);
-                $("#ans2").text(advantage);
-                $("#ans3").text(codingStyle);
-                $("#ans4").text(teamFeature_Goal);
-                $("#ans5").text(teamPromise);
-                $("#ans6").text(blogUrl);
-                $("#ans6a").attr("href", blogUrl);
-            })
+        const memberId = new URL(location.href).searchParams.get("id");
+        showMember(memberId);
     </script>
 </head>
 
@@ -182,38 +153,38 @@
             <div class="qa-item">
                 <p><strong>Q1:</strong> [팀]과 [자신]에 대한 설명 및 MBTI <button class="toggle-button"
                         onclick="toggleAnswer('A1', this)">▼</button></p>
-                <p id="A1" style="display: none;"><strong>A1: </strong> <span id="ans1"></span>
+                <p id="A1" style="display: none;"><strong>A1: </strong> <span id="info_mbti"></span>
                 </p>
             </div>
             <div class="qa-item">
                 <p><strong>Q2:</strong> 객관적으로 살펴본 자신의 장점 <button class="toggle-button"
                         onclick="toggleAnswer('A2', this)">▼</button></p>
-                <p id="A2" style="display: none;"><strong>A2: </strong> <span id="ans2"></span>
+                <p id="A2" style="display: none;"><strong>A2: </strong> <span id="advantage"></span>
                 </p>
             </div>
             <div class="qa-item">
                 <p><strong>Q3:</strong> 자신의 스타일 협업 스타일 소개 <button class="toggle-button"
                         onclick="toggleAnswer('A3', this)">▼</button></p>
-                <p id="A3" style="display: none;"><strong>A3: </strong> <span id="ans3"></span>
+                <p id="A3" style="display: none;"><strong>A3: </strong> <span id="codingStyle"></span>
                 </p>
             </div>
             <div class="qa-item">
                 <p><strong>Q4:</strong> 우리 팀만의 특징과 추구하는 궁극적인 목표 <button class="toggle-button"
                         onclick="toggleAnswer('A4', this)">▼</button></p>
-                <p id="A4" style="display: none;"><strong>A4: </strong> <span id="ans4"></span>
+                <p id="A4" style="display: none;"><strong>A4: </strong> <span id="teamFeature_Goal"></span>
                 </p>
             </div>
             <div class="qa-item">
                 <p><strong>Q5:</strong> 우리 팀의 약속 <button class="toggle-button"
                         onclick="toggleAnswer('A5', this)">▼</button></p>
-                <p id="A5" style="display: none;"><strong>A5: </strong> <span id="ans5"></span>
+                <p id="A5" style="display: none;"><strong>A5: </strong> <span id="teamPromise"></span>
                 </p>
             </div>
             <div class="qa-item">
                 <p><strong>Q6:</strong> 팀원들의 블로그 주소 <button class="toggle-button"
                         onclick="toggleAnswer('A6', this)">▼</button></p>
-                <p id="A6" style="display: none;"><strong>A6: </strong><a id="ans6a" target="_blank"> <span
-                            id="ans6"></span></a>
+                <p id="A6" style="display: none;"><strong>A6: </strong><a id="blogUrl-a" target="_blank"> <span
+                            id="blogUrl"></span></a>
                 </p>
             </div>
             <button id="backButton" class="back-button" onclick="goBack()">

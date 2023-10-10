@@ -75,37 +75,25 @@
     </style>
 
     <script type="module">
-        import { collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getDoc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { db, storage } from "./js/db.js";
-        import { ref, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js"
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { db } from "./js/db.js";
+        import { editMember } from "./js/member/editMember.js";
 
         const memberId = new URL(location.href).searchParams.get("id");
 
         const docRef = await getDoc(doc(db, "members", memberId));
         const row = docRef.data();
 
-        const position = row["position"];
-        const name = row["name"];
-        const info_mbti = row["info_mbti"];
-        const advantage = row["advantage"];
-        const codingStyle = row["codingStyle"];
-        const teamFeature_Goal = row["teamFeature_Goal"];
-        const teamPromise = row["teamPromise"];
-        const blogUrl = row["blogUrl"];
+        $("#name").val(row["name"]);
+        $("#position").val(row["position"]);
+        $("#info_mbti").val(row["info_mbti"]);
+        $("#advantage").val(row["advantage"]);
+        $("#codingStyle").val(row["codingStyle"]);
+        $("#teamFeature_Goal").val(row["teamFeature_Goal"]);
+        $("#teamPromise").val(row["teamPromise"]);
+        $("#blogUrl").val(row["blogUrl"]);
 
-        $("#name").val(name);
-        $("#position").val(position);
-        $("#info_mbti").val(info_mbti);
-        $("#advantage").val(advantage);
-        $("#codingStyle").val(codingStyle);
-        $("#teamFeature_Goal").val(teamFeature_Goal);
-        $("#teamPromise").val(teamPromise);
-        $("#blogUrl").val(blogUrl);
-
-        $("#saveButton").click(async function () {
-            const file = document.querySelector('#imageUrl').files[0];
-
+        $("#saveButton").click(() => {
             const data = {
                 name: $("#name").val(),
                 position: $("#position").val(),
@@ -117,22 +105,9 @@
                 blogUrl: $("#blogUrl").val()
             };
 
-            if (file !== undefined) {
-                data.imageUrl = file.name;
-
-                await updateDoc(doc(db, "members", memberId), data);
-
-                uploadBytes(ref(storage, file.name), file).then((snapshot) => {
-                    alert("수정 완료");
-                    window.location.href = "index.html";
-                });
-            } else {
-                await updateDoc(doc(db, "members", memberId), data);
-
-                alert("수정 완료");
-                window.location.href = "index.html";
-            }
-        })
+            const file = $("#imageUrl")[0].files[0];
+            editMember(memberId, data, file)}
+        );
 
         $("#cancelButton").click(() => {
             window.location.href = "index.html";
