@@ -15,6 +15,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Lobster&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
         @import url(css/team-member.css);
         @import url(css/dropmenu.css);
+
         h1 {
             font-family: 'Lobster', cursive;
         }
@@ -99,6 +100,7 @@
         h1 {
             font-size: 30px;
         }
+
         .team-members {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -117,7 +119,7 @@
     <script type="module">
         import { addMember } from "./js/member/addMember.js";
         import { showMembers } from "./js/member/showMembers.js";
-        
+
         showMembers();
 
         $("#btn").click(() => {
@@ -152,6 +154,10 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">비밀번호 입력란</label>
+                            <input type="text" class="form-control" id="password field">
+                        </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">이름</label>
                             <input type="text" class="form-control" id="name">

@@ -106,7 +106,8 @@
             };
 
             const file = $("#imageUrl")[0].files[0];
-            editMember(memberId, data, file)}
+            editMember(memberId, data, file)
+        }
         );
 
         $("#cancelButton").click(() => {
@@ -118,12 +119,16 @@
 <body>
     <div class="edit-container">
         <h1>프로필 수정</h1>
+        <label for="password field">비밀번호 입력란:</label>
+        <input type="text" id="position" name="password field">
+
         <label for="name">이름:</label>
         <input type="text" id="name" name="name">
 
         <div class="mb-3" style="width: 95%;">
             <label for="imageUrl" class="form-label" style="color: white;">사진 파일</label>
-            <input type="file" class="form-control" id="imageUrl" style="background-color: #333; color: white; height: 37px;">
+            <input type="file" class="form-control" id="imageUrl"
+                style="background-color: #333; color: white; height: 37px;">
         </div>
 
         <label for="position">팀역할:</label>
