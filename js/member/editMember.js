@@ -3,7 +3,7 @@ import { ref, uploadBytes } from "https://www.gstatic.com/firebasejs/9.22.0/fire
 import { db, storage } from "../db.js";
 
 export const editMember = async (memberId, data, file, cardPassword) => {
-    if (data.cardPassword !== cardPassword) {
+    if (data.cardPassword != cardPassword) {
         alert("비밀번호가 일치하지 않습니다.");
         return;
     }

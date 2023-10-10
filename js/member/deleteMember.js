@@ -3,7 +3,7 @@ import { deleteObject, ref } from "https://www.gstatic.com/firebasejs/9.22.0/fir
 import { db, storage } from "../db.js";
 
 export const deleteMember = async (memberId, imageUrl, cardPassword) => {
-    if (prompt("비밀번호를 입력해주세요.") !== cardPassword) {
+    if (prompt("비밀번호를 입력해주세요.") != cardPassword) {
         alert("비밀번호가 일치하지 않습니다.");
         return;
     }
