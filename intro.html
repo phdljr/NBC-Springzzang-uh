@@ -12,94 +12,12 @@
         crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Moirai+One&family=Nanum+Pen+Script&family=Sunflower:wght@300&display=swap');
-        @import url(css/team-member.css);
-        @import url(css/qa-container.css);
-        * {
-            font-family: 'Gowun Dodum', sans-serif;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .team-member-container {
-            display: flex;
-
-            justify-content: space-between;
-            
-        }
-
-
-
-
-        /* 스타일 추가: 토글 버튼 */
-        .toggle-button {
-            cursor: pointer;
-            display: inline-block;
-            margin-left: 5px;
-            border: none;
-            background-color: transparent;
-            outline: none;
-            transition: transform 0.3s;
-            color: #fff;
-            font-size: 20px;
-            /* 변환 애니메이션 효과를 추가 */
-        }
-
-        /* 삼각형 아이콘을 위 아래로 회전하는 스타일 */
-        .rotate-up {
-            transform: rotate(180deg);
-        }
-
-        .qa-container p strong {
-            color: red;
-            font-weight: bold;
-        }
-
-        .back-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: white;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .edit-button {
-            position: fixed;
-            bottom: 20px;
-            right: 120px;
-            background-color: white;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .edit-button:hover {
-            background-color: red;
-        }
-
-        .back-button:hover {
-            background-color: red;
-        }
+        @import url(css/intro.css);
     </style>
 
     <script type="module">
         import {showMember} from "./js/member/showMember.js";
-
+        
         const memberId = new URL(location.href).searchParams.get("id");
         showMember(memberId);
     </script>
