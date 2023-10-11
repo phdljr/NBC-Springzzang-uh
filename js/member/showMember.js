@@ -6,18 +6,19 @@ export const showMember = async (memberId) => {
     const docRef = await getDoc(doc(db, "members", memberId));
     const row = docRef.data();
 
+    $("#name").text(row["name"]);
+    $("#position").text(row["position"]);
+    $("#info_mbti").text(row["info_mbti"]);
+    $("#advantage").text(row["advantage"]);
+    $("#codingStyle").text(row["codingStyle"]);
+    $("#teamFeature_Goal").text(row["teamFeature_Goal"]);
+    $("#teamPromise").text(row["teamPromise"]);
+    $("#blogUrl").text(row["blogUrl"]);
+    $("#blogUrl-a").attr("href", row["blogUrl"]);
+
     getDownloadURL(ref(storage, row["imageUrl"]))
         .then((url) => {
             $("#image").attr("src", url);
-            $("#name").text(row["name"]);
-            $("#position").text(row["position"]);
-            $("#info_mbti").text(row["info_mbti"]);
-            $("#advantage").text(row["advantage"]);
-            $("#codingStyle").text(row["codingStyle"]);
-            $("#teamFeature_Goal").text(row["teamFeature_Goal"]);
-            $("#teamPromise").text(row["teamPromise"]);
-            $("#blogUrl").text(row["blogUrl"]);
-            $("#blogUrl-a").attr("href", row["blogUrl"]);
         });
 }
 

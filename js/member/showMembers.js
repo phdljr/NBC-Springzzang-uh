@@ -43,7 +43,7 @@ export const showMembers = async () => {
             `;
 
     $('#wrapper').append(html);
-    $(`#${dropdown}`).click(function(e){
+    $(`#${dropdown}`).click((e) => {
         $(this).find("ul").stop().fadeToggle(300); 
     });
     $(`#${id}`).click(() => {deleteMember(id, imageUrl, cardPassword)});
