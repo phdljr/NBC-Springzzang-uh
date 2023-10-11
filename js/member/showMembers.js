@@ -14,7 +14,7 @@ export const showMembers = async () => {
     const imageUrl = row["imageUrl"];
     const position = row["position"];
     const name = row["name"];
-    const dropdown = row["name"];
+    const dropdown = row["name"] + "name";
     const cardPassword = row["cardPassword"];
 
     const html = `
@@ -43,7 +43,7 @@ export const showMembers = async () => {
             `;
 
     $('#wrapper').append(html);
-    $(`#${dropdown}`).click((e) => {
+    $(`#${dropdown}`).click(function(e){
         $(this).find("ul").stop().fadeToggle(300); 
     });
     $(`#${id}`).click(() => {deleteMember(id, imageUrl, cardPassword)});
